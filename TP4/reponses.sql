@@ -162,3 +162,12 @@ EXCEPT
 SELECT client.numcli, prenom, nom FROM client NATURAL JOIN facture NATURAL JOIN contient NATURAL JOIN produit
 WHERE lower(libelle) = 'bureau';
 
+
+/* EXO 3 */
+
+/* 2.
+Finissez d’effacer toutes les tables de votre base de données. Vous pouvez pour cela
+utiliser le script dropmagasin.sql fourni sur la page du cours
+ */
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
