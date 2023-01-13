@@ -63,3 +63,28 @@ HAVING sum(prixunit * quantite) >= 3000;
 
 
 /* EXO 2 */
+
+/* 1.
+   La liste des identifiants et noms de magasins qui ne vendent pas de bureaux
+ */
+SELECT idmag, nom FROM magasin
+WHERE idmag NOT IN (
+    SELECT idmag
+    FROM magasin NATURAL JOIN stocke NATURAL JOIN produit
+    WHERE lower(libelle) = 'bureau'
+);
+
+/* 2.
+   La liste des magasins dont tous les produits sont
+   à moins de 100 euros.
+ */
+SELECT idmag, nom FROM magasin
+WHERE idmag NOT IN (
+    SELECT idmag
+    FROM magasin NATURAL JOIN stocke
+    WHERE prixunit >= 100
+);
+
+/* 3.
+   
+ */
