@@ -48,7 +48,8 @@ ORDER BY montant_total DESC;
  */
 SELECT nom, count(DISTINCT libelle) AS nb_produits
 FROM magasin NATURAL JOIN stocke NATURAL JOIN produit
-GROUP BY nom HAVING count(DISTINCT libelle) >= 20;
+GROUP BY nom
+HAVING count(DISTINCT libelle) >= 20;
 
 /* 8.
   La liste des numéros, noms et prénoms de clients qui habitent à Paris et ont dépensé
@@ -86,5 +87,27 @@ WHERE idmag NOT IN (
 );
 
 /* 3.
-   
+  La liste des produits qu’aucun client n’a acheté.
+ */
+SELECT idpro, libelle
+FROM produit
+WHERE idpro NOT IN (
+    SELECT idpro FROM contient
+);
+
+/* 4.
+   La liste des identifiants et libellés de produits qui ont été vendus au moins 40%
+   plus cher que leur prix moyen sur le marché.
+ */
+SELECT prod1.idpro, libelle, prixUnit AS prixVente
+FROM produit AS prod1 NATURAL JOIN contient
+WHERE prixUnit >= (
+    SELECT avg(prixUnit)
+    FROM stocke
+    WHERE prod1.idpro = stocke.idpro
+) * 1.4;
+
+/* 5.
+   La liste des noms et prénoms de clients qui ont acheté un produit au moins 20
+   euros plus cher que son prix moyen, avec les libellés des produits en question.
  */
