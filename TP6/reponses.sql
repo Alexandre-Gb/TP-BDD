@@ -51,5 +51,15 @@ FROM magasin NATURAL JOIN stocke NATURAL JOIN produit
 GROUP BY nom HAVING count(DISTINCT libelle) >= 20;
 
 /* 8.
-
+  La liste des numéros, noms et prénoms de clients qui habitent à Paris et ont dépensé
+  au moins 3000 euros, tous achats confondus.
+  On renverra également le montant en question
  */
+SELECT numcli, nom, prenom, sum(prixunit * quantite) AS montant_total
+FROM client NATURAL JOIN facture NATURAL JOIN contient
+WHERE lower(client.ville) = 'paris'
+GROUP BY (numcli, nom, prenom)
+HAVING sum(prixunit * quantite) >= 3000;
+
+
+/* EXO 2 */
